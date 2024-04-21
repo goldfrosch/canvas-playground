@@ -4,6 +4,7 @@ interface particle {
   radius: number;
   color: string;
   speed: number;
+  lastMoveDir: number;
 }
 
 export class Snow {
@@ -54,7 +55,8 @@ export class Snow {
           y: 0,
           radius: Math.random() * 4 + 1,
           color: "white",
-          speed: Math.random() * 1 + 1,
+          speed: Math.random() * 1 + 0.2,
+          lastMoveDir: 0,
         });
       }
     }
@@ -68,6 +70,30 @@ export class Snow {
   private updateParticle() {
     for (const i in this.particles) {
       const part = this.particles[i];
+      const ran = Math.random() + part.lastMoveDir;
+
+      if (this.tick % 5 === 0) {
+        if (ran > 0.5) {
+          part.x += part.speed;
+          if (part.lastMoveDir < 0) {
+            part.lastMoveDir = 0.1;
+          } else {
+            part.lastMoveDir += 0.1;
+          }
+        } else {
+          part.x -= part.speed;
+          if (part.lastMoveDir > 0) {
+            part.lastMoveDir = -0.1;
+          } else {
+            part.lastMoveDir -= 0.1;
+          }
+        }
+      }
+
+      if (part.lastMoveDir === Math.abs(0.4)) {
+        part.lastMoveDir = 0;
+      }
+
       part.y += part.speed;
     }
   }
@@ -81,7 +107,8 @@ export class Snow {
           y: 0,
           radius: Math.random() * 4 + 1,
           color: "white",
-          speed: Math.random() * 1 + 1,
+          speed: Math.random() * 1 + 0.2,
+          lastMoveDir: 0,
         };
       }
     }
