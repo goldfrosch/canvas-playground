@@ -73,7 +73,7 @@ export class Snow {
       const ran = Math.random() + part.lastMoveDir;
 
       if (this.tick % 5 === 0) {
-        if (ran > 0.5) {
+        if (ran > 0.3) {
           part.x += part.speed;
           if (part.lastMoveDir < 0) {
             part.lastMoveDir = 0.1;
